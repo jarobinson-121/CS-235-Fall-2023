@@ -10,21 +10,15 @@ int main(int argc, char const* argv[]) {
     ifstream inputFile(argv[1]);
     ofstream outputFile(argv[2]);
 
-    if(inputFile.is_open()) {
-        cout << "The File WorkS!!!";
-    }
-    
-    else {
-        cout << "booty";
+    if(!inputFile.is_open()) {
+        cout << "inputFile could not be opened.";
     }
 
-    if(outputFile.is_open()) {
-        cout << "The File WorkS!!!2";
+    if(!outputFile.is_open()) {
+        cout << "outputFile could not be opened.";
     }
+
     
-    else {
-        cout << "booty2";
-    }
 
     inputFile.close();
 
