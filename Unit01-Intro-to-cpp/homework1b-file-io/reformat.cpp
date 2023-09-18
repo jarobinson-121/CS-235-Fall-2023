@@ -28,7 +28,9 @@ int main(int argc, char const* argv[]) {
     string lastName;
     int points;
     double factor;
-    double finalPoints;
+    double newPoints;
+    string finalPoints;
+    string finalString;
 
     while(getline(inputFile, input)) {
         firstName = input.substr(0, input.find(delimiter));
@@ -49,9 +51,16 @@ int main(int argc, char const* argv[]) {
 
         cout << setprecision(2);
 
-    }
+        newPoints = points * factor;
 
-    finalPoints = points * factor;
+        finalPoints = to_string(newPoints);
+
+        finalString = lastName + ", " + firstName + ": " + finalPoints;
+
+        outputFile << finalString << endl;
+
+    }
+    
 
     inputFile.close();
 
