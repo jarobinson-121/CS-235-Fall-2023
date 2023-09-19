@@ -10,9 +10,9 @@ int main(int argc, char const* argv[]) {
     ifstream inputFile(argv[1]);
     int counter = 0;
     string words;
-    istringstream iss(words);
-    string longestString;
-    int longestCount;
+    string longestString = "";
+    int longestCount = 0;
+    string temp;
 
 
     if(!inputFile.is_open()) {
@@ -21,26 +21,38 @@ int main(int argc, char const* argv[]) {
         
         return -1;
     }
+    else {
 
-    while(!inputFile.eof()) {
+        while(!inputFile.eof()) {
 
-        getline(inputFile, words);
+            getline(inputFile, words);
 
-        while(iss >> words) {
+            temp = words;
 
-            counter ++;
+            istringstream iss(words);
+
+                while(iss >> words) {
+
+                    counter ++;
+
+                }
+
+                if(counter > longestCount) {
+
+                    longestCount = counter;
+
+                    longestString = temp;
+
+                }
 
         }
 
-        if(counter > longestCount) {
 
-            longestCount = counter;
+        cout << longestString << endl;
 
-            longestString = words;
-
-        }
-
+        inputFile.close();
     }
 
     return 0;
+
 }
