@@ -37,7 +37,8 @@ int main(int argc, char const* argv[]) {
 
         getline(inputFile, input);
 
-        istringstream iss(input);
+        if(input.length() > 2) {
+            istringstream iss(input);
 
         iss >> firstName;
 
@@ -48,6 +49,8 @@ int main(int argc, char const* argv[]) {
         iss >> factor;
 
         outputFile << lastName << ", " << firstName << ": " << (points * factor) << endl;
+
+        }
 
     }
 
