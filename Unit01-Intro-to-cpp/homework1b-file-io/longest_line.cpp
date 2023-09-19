@@ -8,7 +8,6 @@ using namespace std;
 int main(int argc, char const* argv[]) {
 
     ifstream inputFile(argv[1]);
-    int counter = 0;
     string words;
     string longestString = "";
     int longestCount = 0;
@@ -24,6 +23,8 @@ int main(int argc, char const* argv[]) {
     else {
 
         while(!inputFile.eof()) {
+
+            int counter = 0;
 
             getline(inputFile, words);
 
