@@ -10,7 +10,7 @@ int main(int argc, char const* argv[]) {
     string fnombre = "iGuessthisisafilename.ohboy";
     string input;
 
-    if(argc > 1) {
+    if(argc == 3) {
         for(int i = 1; i < argc; i++) {
             if(argv[i][0] == '-') {
                 //this is specifying numLines
@@ -23,18 +23,55 @@ int main(int argc, char const* argv[]) {
             }
         }
 
-        ifstream inputFile(fnombre);
+        if(fnombre != "iGuessthisisafilename.ohboy") {
 
-        if(!inputFile.is_open()) {
-            cerr << "ERROR: can't open " << fnombre;
-            return -1;
+            ifstream inputFile(fnombre);
+
+            if(!inputFile.is_open()) {
+                cerr << "ERROR: can't open " << fnombre;
+                return -1;
+            }
+
+            for(int i = 0; i < numLines; i++) {
+                getline(inputFile, input);
+                cout << input << endl;
+            }
+
+            inputFile.close();
+
         }
 
-        for(int i = 0; i < numLines; i++) {
-            getline(inputFile, input);
-            cout << input << endl;
+    }
+
+    else if(argc == 2) {
+        string input2;
+        if(argv[1][0] == '-') {
+            //this is specifying numLines
+            string lineStr = argv[1];
+            numLines = stoi(lineStr.substr(1));
+
+            for(int i = 0; i < numLines; i++) {
+                getline(cin, input2);
+                cout << input2 << endl;
+            }
         }
 
+        else {
+
+            ifstream inputFile2(argv[1]);
+
+            if(!inputFile2.is_open()) {
+                cerr << "ERROR: can't open " << fnombre;
+                return -1;
+            }
+
+            for(int i = 0; i < numLines; i++) {
+                getline(inputFile2, input);
+                cout << input << endl;
+            }
+
+            inputFile2.close();
+        }
     }
 
     else {
@@ -42,6 +79,8 @@ int main(int argc, char const* argv[]) {
             cout << input << endl;
         }
     }
+
+    
 
     return 0;
 }
