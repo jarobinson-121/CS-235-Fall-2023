@@ -33,8 +33,10 @@ int main(int argc, char const* argv[]) {
             }
 
             for(int i = 0; i < numLines; i++) {
-                getline(inputFile, input);
-                cout << input << endl;
+                if(!inputFile.eof()) {
+                    getline(inputFile, input);
+                    cout << input << endl;
+                }
             }
 
             inputFile.close();
