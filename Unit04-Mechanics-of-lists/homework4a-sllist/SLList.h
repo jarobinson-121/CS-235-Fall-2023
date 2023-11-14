@@ -10,16 +10,33 @@ public:
         Node(T v) : next(nullptr), value(v) {}
     };
 
-    SLList() {}
+    SLList() {
+        head = nullptr;
+        tail = nullptr;
+        count = 0;
+    }
 
-    ~SLList() {}
+    ~SLList() {
+        
+    }
 
     const Node* get_head() const {
-        // implement get_head here
+        return head;
     }
 
     void push_back(T item) {
-        // implement push_back here
+        Node* newNode = new Node(item);
+
+        if(head == nullptr) {
+            tail = newNode;
+            head = newNode;
+        }
+        else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+
+        count++;
     }
 
     void pop_back() {
@@ -31,10 +48,30 @@ public:
     }
 
     int size() const {
-        // implement size here
+        return count;
     }
 
     void clear() {
-        // implement clear here
+        while(itr != nullptr) {
+            Node* tmp = itr;
+            itr = itr->next;
+            delete tmp;
+        }
     }
+
+    void print() {
+        cout << "Linked List is: ";
+        Node* itr = head;
+        while(itr != nullptr) {
+            cout << itr->value << ", ";
+            itr = itr->next;
+        }
+
+        cout << endl;
+    }
+
+private:
+    Node* head;
+    Node* tail;
+    int count;
 };

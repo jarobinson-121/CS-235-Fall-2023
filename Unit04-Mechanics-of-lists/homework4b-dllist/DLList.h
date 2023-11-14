@@ -39,7 +39,42 @@ public:
         // implement pop_back here
     }
     void remove(int position) {
-        // implement remove here
+
+        if(position >= size()){
+            return;
+        }
+
+        // Case 1: position = 0
+        else if(position == 0) {
+            Node* tmp = head;
+            head = head->next;
+            delete tmp;
+        }
+
+
+        // Case 2: position = size() -1
+        else if(position == (size() -1)) {
+            Node* itr = head;
+            for(int i =0; i < (position -1); i++) {
+                itr = itr->next;
+            }
+            Node* tmp = tail;
+            itr->next = nullptr;
+            delete tmp;
+            tail = itr;
+        }
+
+        // Case 3: removing from the middle
+        else {
+            Node* itr = head;
+            for(int i =0; i < (position -1); i++) {
+                itr = itr->next;
+            }
+            Node* tmp = itr->next;
+            itr->next = itr->next->next;
+            delete tmp;
+        }
+        count--;
     }
 
     const T& front() const {
