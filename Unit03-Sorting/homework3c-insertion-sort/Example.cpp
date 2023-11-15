@@ -2,6 +2,8 @@
 #include <fstream>
 #include <vector>
 
+using namespace std;
+
 void insertionSort(std::vector<std::string>& array) {
     int n = array.size();
     
@@ -18,8 +20,8 @@ void insertionSort(std::vector<std::string>& array) {
     }
 }
 
-int main() {
-    std::ifstream inputFile("input.txt"); // Change the file name as needed
+int main(int argc, char const* argv[]) {
+    ifstream inputFile(argv[1]); // Change the file name as needed
 
     if (!inputFile.is_open()) {
         std::cerr << "Error opening file." << std::endl;

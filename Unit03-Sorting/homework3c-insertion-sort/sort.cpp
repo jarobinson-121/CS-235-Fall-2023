@@ -1,28 +1,31 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include <fstream>
 
 using namespace std;
 
-void insertionSort(string Array[], string length) {
-    int i;
+void insertionSort(vector<string>& vector) {
+    int length = vector.size();
     int j;
-    int item;
 
-    // for(i = 1; i < length; i++) {
-    //     j = i;
+    for(int i = 1; i < length; i++) {
+        j = i - 1;
+        string item = vector[i];
 
-    //     item = Array[j];
-    //     while ((j > 0) && (Array[j-1] > item)) {
-    //         Array[j] = Array[j-1];
-    //         j --;
-    //     }
-    // }
+        while ((j >= 0) && (vector[j] > item)) {
+            vector[j + 1] = vector[j];
+            j--;
+        }
+
+        vector[j + 1] = item;
+    }
+    
 }
 
 int main(int argc, char const* argv[]) {
     string temp;
-    string sortArray[1];
+    vector<string> sortVect;
 
     if(argc == 2) {
         ifstream inputFile(argv[1]);
@@ -32,13 +35,29 @@ int main(int argc, char const* argv[]) {
             return 1;
         }
         else {
-            cout << "It worked!" << endl;
             while(inputFile >> temp) {
-                getline(inputFile, temp);
-
-                insertionSort(sortArray, temp);
+                sortVect.push_back(temp);
             }
         }
+
+        inputFile.close();
+
+        insertionSort(sortVect);
+
+    }
+    else {
+        getline(cin, temp);
+
+        while(temp != "") {
+            sortVect.push_back(temp);
+
+            getline(cin, temp);
+        }
+        insertionSort(sortVect);
+    }
+
+    for(int i = 0; i < sortVect.size(); i++) {
+        cout << sortVect[i] << endl;
     }
 
 

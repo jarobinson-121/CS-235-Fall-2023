@@ -1,5 +1,7 @@
 #pragma once
 
+using namespace std;
+
 template <class T>
 class SLList {
 public:
@@ -17,7 +19,7 @@ public:
     }
 
     ~SLList() {
-        
+        clear();
     }
 
     const Node* get_head() const {
@@ -40,11 +42,24 @@ public:
     }
 
     void pop_back() {
-        // implement pop_back here
+        remove(size() -1);
+        // Node* temp = tail;
+        // Node* itr = head;
+        // for(int i = 0; i < size(); i++) {
+        //     itr = itr->next;
+        // }
+
+        // itr->next = nullptr;
+
+        // delete temp;
+
+        // tail = itr;
+
+        // count--;
     }
 
     const T& front() const {
-        // implement front here
+        return head->value;
     }
 
     int size() const {
@@ -52,11 +67,14 @@ public:
     }
 
     void clear() {
+        Node* itr = head;
         while(itr != nullptr) {
             Node* tmp = itr;
             itr = itr->next;
             delete tmp;
+            count--;
         }
+
     }
 
     void print() {
@@ -68,6 +86,25 @@ public:
         }
 
         cout << endl;
+    }
+
+    void remove(int position) {
+        if(position == 0) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+        }
+        else if(position == size() -1) {
+            Node* temp = tail;
+            Node* itr = head;
+            for(int i = 0; i < position -1; i++){
+                itr = itr->next;
+            }
+            itr->next = nullptr;
+            delete temp; 
+            tail = itr;
+        }
+        count--;
     }
 
 private:
