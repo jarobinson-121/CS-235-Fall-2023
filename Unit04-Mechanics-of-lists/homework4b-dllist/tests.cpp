@@ -311,6 +311,7 @@ void test6() {
     noisy_pop_back(list);
     noisy_pop_front(list);
     noisy_pop_front(list);
+    std::cout << "what" << std::endl;
 }
 
 // Checks that remove works
