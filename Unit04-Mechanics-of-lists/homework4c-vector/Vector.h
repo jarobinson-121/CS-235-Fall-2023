@@ -10,81 +10,98 @@ template<class T>
 class Vector {
 
 private: 
-    int size;
+    int length;
     int capacity;
     T* arr;
 
 public:
     Vector() {
         capacity = 10;
-        size = 0;
+        length = 0;
         arr = new T[capacity];
     }
 
     ~Vector() {
         clear();
+        delete[] arr;
     }
 
     void push_back(T item) {
-        // implement push_back here
-        size++;
+        if(length == capacity) {
+            capacity++;
+            T* newArr = new T[capacity];
+
+            for(int i = 0; i < length; i++) {
+                newArr[i] = arr[i];
+            }
+
+            delete[] arr;
+            arr = newArr;
+
+            arr[length++] = item;
+        }
+        else {
+            arr[length++] = item;
+        }
     }
 
     void insert(T item, int position) {
-        if(position > size) {
-            throw out_of_range("Index out of range") 
+        if(position > length) {
+            throw out_of_range("Index out of range");
         }
-        if(size == capacity) {
-            capacity *= 2;
+        if(length == capacity) {
+            capacity++;
             T* newArr = new T[capacity];
 
-            for(int i = 0; i < position; ) {
+            for(int i = 0; i < position; i++) {
                 newArr[i] = arr[i];
             }
 
             newArr[position] = item;
 
-            for(int i = ; i < position; i++) {
+            for(int i = position; i < length; i++) {
                 newArr[i + 1] = arr[i];
             }
             delete[] arr;
             arr = newArr;
-            size++;
+            length++;
         }
 
         else {
-            for(int i = size; i > position; i--) {
+            for(int i = length; i > position; i--) {
                 arr[i] = arr[i - 1];
             }
             arr[position] = item;
-            size++;
+            length++;
         }
     }
 
     void remove(int position) {
-        if(position > size) {
+        if(position >= length) {
             throw out_of_range("Index out of range");
         }
         else {
-            for(int i = position; i < size - 1; i++) {
+            for(int i = position; i < length; i++) {
                 arr[i] = arr[i + 1];
             }
-            size--;
+            length--;
         }
     }
 
     T& operator[](int index) {
-        if(index >= size) {
+        if(index >= length) {
             throw out_of_range("Index out of range");
         }
-        return data[index];
+        return arr[index];
     }
 
     int size() const {
-        return size;
+        return length;
     }
 
     void clear() {
-        delete[] arr;
+        while(length > 0) {
+            remove(0);
+        }
     }
 };

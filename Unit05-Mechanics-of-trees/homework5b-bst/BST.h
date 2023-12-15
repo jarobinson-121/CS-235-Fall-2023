@@ -39,21 +39,26 @@ public:
         if(root == nullptr) {
             return;
         }
-        removeHelper(root, root->value);
+        else {
+            clearHelper(root);
+        }
+        root = nullptr;
+        count = 0;
     }
 
-    int size(Node* root) const {
+    int size() const {
         if(root == nullptr) {
             return 0;
         }
         else {
-            return 1 + size(root->left) + size(root->right);
+            return count;
         }
     }
 
     bool insertHelper(Node*& n, int val) {
         if(n == nullptr) {
             n = new Node(val);
+            count++;
             return true;
         }
         else if(val == n->value) {
@@ -67,7 +72,7 @@ public:
         }
     }
 
-    bool findHelper(Node* n, int v) {
+    bool findHelper(Node* n, int v) const {
         if(n == nullptr) {
             return false;
         }
@@ -83,61 +88,45 @@ public:
     }
 
     bool removeHelper(Node*& n, T val) {
+        if(n == nullptr) {
+            return false;
+        }
+        
         if(n->value == val) {
-            Node* temp = parentHelper(n, val);
+            //no children
             if(n->right == nullptr && n->left == nullptr) {
-                if(temp->right == val) {
-                    temp->right = nullptr;
-                    delete n;
-                    return true;
-                }
-                if(temp->left == val) {
-                    temp->left = nullptr;
-                    delete n;
-                    return true;
-                }
+                n = nullptr;
+                delete n;
+                count--;
+                return true;
             }
+            //left child
             else if(n->right == nullptr && n->left != nullptr) {
-                if(temp->right->value == val) {
-                    temp->right = n->left;
-                    delete n;
-                    return true;
-                }
-                if(temp->left->value == val) {
-                    temp->left = n->left;
-                    delete n;
-                    return true;
-                }
-
+                Node* tmp = n->left;
+                delete n;
+                n = tmp;
+                count--;
+                return true;
             }
+            //right child
             else if(n->right != nullptr && n->left == nullptr) {
-                if(temp->right->value == val) {
-                    temp->right = n->right;
-                    delete n;
-                }
-                if(temp->left->value == val) {
-                    temp->left = n->right;
-                    delete n;
-                    return true;
-                }
+                Node* tmp = n->right;
+                delete n;
+                n = tmp;
+                count--;
+                return true;
             }
+            //both
             else {
-                Node* swap = n->left;
-                while (swap->right) {
-                    swap = swap->right;
+                Node* iop = n->left;
+                while(iop->right != nullptr) {
+                    iop = iop->right;
                 }
-                if(temp->right->value == val) {
-                    temp->right = swap;
-                    swap->right = n->right;
-                    delete n;
-                    return true;
-                }
-                if(temp->left->value == val) {
-                    temp->left = swap;
-                    swap->right = n->right;
-                    delete n;
-                    return true;
-                }                
+                n->value = iop->value;
+                bool isRemoved = removeHelper(n->left, iop->value);
+
+                count--;
+                return isRemoved;
             }
         }
         else if(n->value > val) {
@@ -145,24 +134,20 @@ public:
         }
         else {
             return removeHelper(n->right, val);
+        
         }    
-
     }
 
-Node* parentHelper(Node*& n, int val) {
-        if(n->left->value == val) {
-            return n;
-        }
-        else if(n->right->value == val) {
-            return n;
-        }
-        else if(n->left->value > val) {
-            return parentHelper(n->left, val);
-        }
-        else {
-            return parentHelper(n->right, val);
-        }
+
+void clearHelper(Node*& n) {
+    if(n != nullptr){
+        clearHelper(n->right);
+        clearHelper(n->left);
+        delete n;
+    }
 }
+
 private: 
     Node* root;
+    int count;
 };

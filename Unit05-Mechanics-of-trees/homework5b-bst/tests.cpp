@@ -47,6 +47,7 @@ void test1() {
     noisy_insert(tree, 1);
     noisy_insert(tree, 2);
     noisy_insert(tree, 3);
+    std::cout << "after me" << std::endl;
 }
 
 // Checks that insert works to build up a more complex tree
